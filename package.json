@@ -1,0 +1,81 @@
+{
+  "name": "mongoose-typed-aggregation",
+  "version": "0.1.0",
+  "description": "Fluent, fully type-inferred aggregation pipelines for Mongoose. The compiler infers the output of .match().unwind().group().addFields().sort() \u2014 zero runtime cost.",
+  "keywords": [
+    "mongoose",
+    "mongodb",
+    "aggregation",
+    "aggregate",
+    "pipeline",
+    "typescript",
+    "types",
+    "type-safe",
+    "inference",
+    "lookup",
+    "group",
+    "unwind"
+  ],
+  "homepage": "https://github.com/noamshir/mongoose-typed-aggregation#readme",
+  "bugs": {
+    "url": "https://github.com/noamshir/mongoose-typed-aggregation/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/noamshir/mongoose-typed-aggregation.git"
+  },
+  "license": "MIT",
+  "author": "Noam Shir",
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": false
+  },
+  "scripts": {
+    "build": "rm -rf dist && tsc -p tsconfig.build.json",
+    "typecheck": "tsc --noEmit -p tsconfig.test.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "check": "npm run typecheck && npm test",
+    "sandbox": "tsc --noEmit -p sandbox/tsconfig.json",
+    "sandbox:run": "tsx sandbox/playground.ts",
+    "bench": "echo \"== baseline (mongoose only) ==\" && tsc --noEmit -p bench/tsconfig.baseline.json --extendedDiagnostics | grep -E \"Instantiations|Check time\" && echo \"== 10-stage pipeline ==\" && tsc --noEmit -p bench/tsconfig.json --extendedDiagnostics | grep -E \"Instantiations|Check time\"",
+    "prepublishOnly": "npm run check && npm run build"
+  },
+  "peerDependencies": {
+    "mongoose": ">=9",
+    "typescript": ">=7"
+  },
+  "peerDependenciesMeta": {
+    "typescript": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "expect-type": "^1.4.0",
+    "mongoose": "^9.11.1",
+    "tsx": "^4.20.0",
+    "typescript": "^7.0.2",
+    "vitest": "^5.0.3"
+  }
+}
